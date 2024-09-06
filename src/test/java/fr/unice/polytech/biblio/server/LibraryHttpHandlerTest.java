@@ -23,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //Inspiré de ; https://www.baeldung.com/integration-testing-a-rest-api
 //Inspiré de ; https://blog.mandraketech.in/httpserver-series-testing-the-servert
 
-//TODO : Mettre en place des mock pour pouvoir lancer tous les tests...
-//En l'état les scenarios se supperposent ce qui crée des erreurs.
 public class LibraryHttpHandlerTest {
 
     private static final int PORT = 8003;

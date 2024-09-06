@@ -52,3 +52,15 @@ https://www.jetbrains.com/help/idea/enabling-cucumber-support-in-project.html
 1. Attention: if the classes defining the steps are not public, they are not accessible during execution.
 2. Don't forget to adapt **RunCucumberTest.java** classes to your needs.
 
+
+## Running test with maven (@PhilippeCollet)
+
+By default, maven use its *surefire* plugin to run tests. This plugin is especially built for running unit tests, as it will diretly fail if any test fails. 
+This is a good property for preventing the build to be made (the goal *package* will typically fail).
+
+It must be noted that *surefire* will, by default, find tests with the following names and run them during the `test` phase (i.e. just before `package`):
+
+* `"**/Test*.java"` - includes all of its subdirectories and all Java filenames that start with "Test".
+* `"**/*Test.java"` - includes all of its subdirectories and all Java filenames that end with "Test".
+* `"**/*Tests.java"` - includes all of its subdirectories and all Java filenames that end with "Tests".
+* `"**/*TestCase.java"` - includes all of its subdirectories and all Java filenames that end with "TestCase".`

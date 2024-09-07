@@ -51,6 +51,8 @@ public class SimpleHttpServer4Scolarity {
     }
 
     public static HttpServer startServer(int port, StudentRegistry studentRegistry) throws IOException {
+        logger.log(Level.SEVERE, "scolarity servers on " + servers.keySet());
+        logger.log(Level.SEVERE, "Starting Scolarity Server on port "+port);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/api/members", new MembersHttpHandler(studentRegistry));
         server.setExecutor(null); // creates a default executor
@@ -66,6 +68,7 @@ public class SimpleHttpServer4Scolarity {
         if (servers.get(port) != null) {
             servers.get(port).stop(0);
         }
+        servers.remove(port);
     }
 
 

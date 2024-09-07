@@ -74,6 +74,7 @@ public class SimpleHttpServer4Library {
         if (servers.get(port) != null) {
             servers.get(port).stop(0);
         }
+        servers.remove(port);
     }
 
 

@@ -64,3 +64,35 @@ It must be noted that *surefire* will, by default, find tests with the following
 * `"**/*Test.java"` - includes all of its subdirectories and all Java filenames that end with "Test".
 * `"**/*Tests.java"` - includes all of its subdirectories and all Java filenames that end with "Tests".
 * `"**/*TestCase.java"` - includes all of its subdirectories and all Java filenames that end with "TestCase".`
+
+
+## Tests
+
+Seuls des tests unitaires, d'intégration et de validation vous sont demandés dans la première partie de ce module.
+
+### Unit tests
+Les tests unitaires sont des tests qui vérifient le bon fonctionnement d'une unité de code (une méthode, une classe, etc.) de manière isolée.
+
+[EtudiantTest.java](src%2Ftest%2Fjava%2Ffr%2Funice%2Fpolytech%2Fbiblio%2Fentities%2FEtudiantTest.java),
+ [LivreTest.java](src%2Ftest%2Fjava%2Ffr%2Funice%2Fpolytech%2Fbiblio%2Fentities%2FLivreTest.java),  
+[JaxsonUtilsTest.java](src%2Ftest%2Fjava%2Ffr%2Funice%2Fpolytech%2Fbiblio%2Fserver%2FJaxsonUtilsTest.java)    sont des exemples de tests unitaires.
+
+### Integration tests
+Les tests d'intégration sont des tests qui vérifient le bon fonctionnement de plusieurs unités de code ensemble.
+
+[IntegrationOfScolarityTest.java](src%2Ftest%2Fjava%2Ffr%2Funice%2Fpolytech%2Fbiblio%2Fserver%2FIntegrationOfScolarityTest.java) est un exemple de tests d'intégration où le StudentRegistry est mocké.
+
+### Validation tests
+Les tests de validation sont des tests qui vérifient que le code respecte certaines règles de validation.
+Sous [back](src%2Ftest%2Fresources%2Ffeatures%2Fbiblio%2Fback): les scénarios visent à tester la partie arrière, métier de l'application.
+
+### End-to-end tests
+Les tests end-to-end sont des tests qui vérifient le bon fonctionnement de l'application dans son ensemble.
+Ces tests s'expriment en considérant l'application comme une boîte noire, c'est-à-dire que nous ne nous intéressons pas à la manière dont l'application est implémentée, mais seulement à son comportement.
+
+[APITesting.feature](src%2Ftest%2Fresources%2Ffeatures%2Fbiblio%2FAPITesting.feature) correspond à des tests end-to-end.
+
+### API tests
+Les tests API sont des tests qui vérifient le bon fonctionnement de l'API de l'application.
+[KarateLikeAPITesting.feature](src%2Ftest%2Fresources%2Ffeatures%2Fbiblio%2FKarateLikeAPITesting.feature) explicite des tests API.
+Ils s'inspirent de Karate, un outil de test d'API qui permet de tester des API REST.

@@ -1,18 +1,6 @@
 @startuml
-class BookNotFoundException {
-}
-class HttpUtils {
-+ {static} int OK_CODE
-+ {static} int CREATED_CODE
-+ {static} int NO_CONTENT_CODE
-+ {static} int BAD_REQUEST
-+ {static} int NOT_FOUND_RESOURCE
-+ {static} int INTERNAL_SERVER_ERROR_CODE
-+ {static} String CONTENT_TYPE
-+ {static} String APPLICATION_JSON
-+ {static} String TEXT_PLAIN
-}
 
+package backend {
 class Livre {
 - String titre
 - String[] auteurs
@@ -49,14 +37,6 @@ interface StudentManager {
 ~ void updateStudent(int,String)
 }
 
-class GlobalExceptionHandler {
-'~ {static} Logger logger'
-+ {static} void handleException(HttpExchange,Exception)
-+ {static} void handleException(HttpExchange,IllegalArgumentException)
-+ {static} void handleException(HttpExchange,RuntimeException)
-}
-
-
 class Bibliotheque {
 + {static} int DUREE_MAX_EMPRUNT
 '- Map<String,List<Livre>> livres'
@@ -77,58 +57,6 @@ class Bibliotheque {
 Bibliotheque *-->"1..* livres" Livre
 Bibliotheque *-->"1..* emprunts" Emprunt
 
-class MembersHttpHandler {
-'- StudentRegistry studentRegistry'
-'~ {static} Logger logger'
-+ void handle(com.sun.net.httpserver.HttpExchange)
-}
-MembersHttpHandler -->"1\n studentRegistry" StudentRegistry
-
-
-class LibraryHttpHandler {
-'- Bibliotheque bibliotheque'
-'- StudentRegistry studentRegistry'
-'~ {static} Logger logger'
-+ void handle(HttpExchange)
-}
-LibraryHttpHandler -->"1\n bibliotheque" Bibliotheque
-LibraryHttpHandler -->"1\n studentRegistry" StudentRegistry
-
-
-class LibraryHttpHandler$StudentDTO {
-- int studentNumber
-+ int studentNumber()
-}
-
-
-class SimpleHttpServer4Scolarity {
-'- {static} Map<Integer,HttpServer> servers'
-+ {static} int DEFAULT_PORT
-'~ {static} java.util.logging.Logger logger'
-+ {static} void main(String[])
-+ {static} HttpServer startServer(int)
-+ {static} HttpServer startServer(int,StudentRegistry)
-+ {static} void stopServer(int)
-}
-
-SimpleHttpServer4Scolarity *-->"1\n servers" HttpServer
-
-class SimpleHttpServer4Library {
-- {static} Map<Integer,HttpServer> servers
-'~ {static} Logger logger'
-+ {static} int DEFAULT_PORT4LIBRARY
-+ {static} int DEFAULT_PORT_4_SCOLARITY
-+ {static} void main(String[])
-+ {static} HttpServer startServer(int,Bibliotheque,StudentRegistry)
-+ {static} void stopServer(int)
-}
-SimpleHttpServer4Library *-->"1\n servers" HttpServer
-
-class JaxsonUtils {
-+ {static} String toJson(Object)
-+ {static} T fromJson(String,Class<T>)
-}
-
 class StudentRegistry {
 '~ Map<Integer,Etudiant> students'
 + List<Etudiant> findAll()
@@ -144,6 +72,7 @@ StudentRegistry *-->"1..* students" Etudiant
 
 class StudentNotFoundException {
 }
+
 interface StudentInterface {
 ~ String getName()
 ~ int getStudentNumber()
@@ -165,7 +94,6 @@ class Emprunt {
 Emprunt *-->"1\n livreEmprunte" Livre
 Emprunt *-->"1\n emprunteur" Etudiant
 
-
 class Etudiant {
 - String nom
 - int noEtudiant
@@ -184,14 +112,96 @@ class Etudiant {
 
 Etudiant *-->"1..* emprunts" Emprunt
 
-
+class BookNotFoundException {
+}
 
 Exception <|-- BookNotFoundException
-HttpHandler <|.. MembersHttpHandler
-HttpHandler <|.. LibraryHttpHandler
-LibraryHttpHandler +.. LibraryHttpHandler$StudentDTO
 StudentManager <|.. StudentRegistry
 StudentFinder <|.. StudentRegistry
 Exception <|-- StudentNotFoundException
 StudentInterface <|.. Etudiant
+}
+
+package server {
+
+class HttpUtils {
++ {static} int OK_CODE
++ {static} int CREATED_CODE
++ {static} int NO_CONTENT_CODE
++ {static} int BAD_REQUEST
++ {static} int NOT_FOUND_RESOURCE
++ {static} int INTERNAL_SERVER_ERROR_CODE
++ {static} String CONTENT_TYPE
++ {static} String APPLICATION_JSON
++ {static} String TEXT_PLAIN
+}
+
+class GlobalExceptionHandler {
+'~ {static} Logger logger'
++ {static} void handleException(HttpExchange,Exception)
++ {static} void handleException(HttpExchange,IllegalArgumentException)
++ {static} void handleException(HttpExchange,RuntimeException)
+}
+
+class MembersHttpHandler {
+'- StudentRegistry studentRegistry'
+'~ {static} Logger logger'
++ void handle(com.sun.net.httpserver.HttpExchange)
+}
+
+class LibraryHttpHandler {
+'- Bibliotheque bibliotheque'
+'- StudentRegistry studentRegistry'
+'~ {static} Logger logger'
++ void handle(HttpExchange)
+}
+
+class LibraryHttpHandler$StudentDTO {
+- int studentNumber
++ int studentNumber()
+}
+
+
+class SimpleHttpServer4Scolarity {
+'- {static} Map<Integer,HttpServer> servers'
++ {static} int DEFAULT_PORT
+'~ {static} java.util.logging.Logger logger'
++ {static} void main(String[])
++ {static} HttpServer startServer(int)
++ {static} HttpServer startServer(int,StudentRegistry)
++ {static} void stopServer(int)
+}
+
+SimpleHttpServer4Scolarity *-->"1\n servers" HttpServer
+
+class SimpleHttpServer4Library {
+'- {static} Map<Integer,HttpServer> servers'
+'~ {static} Logger logger'
++ {static} int DEFAULT_PORT4LIBRARY
++ {static} int DEFAULT_PORT_4_SCOLARITY
++ {static} void main(String[])
++ {static} HttpServer startServer(int,Bibliotheque,StudentRegistry)
++ {static} void stopServer(int)
+}
+SimpleHttpServer4Library *-->"1\n servers" HttpServer
+HttpHandler <|.. MembersHttpHandler
+HttpHandler <|.. LibraryHttpHandler
+LibraryHttpHandler +.. LibraryHttpHandler$StudentDTO
+
+HttpServer ..> "context" HttpHandler
+note right of HttpServer
+A server has a context
+that can reference a httpHandler
+end note
+
+class JaxsonUtils {
++ {static} String toJson(Object)
++ {static} T fromJson(String,Class<T>)
+}
+MembersHttpHandler -->"1\n studentRegistry" StudentRegistry
+LibraryHttpHandler -->"1\n bibliotheque" Bibliotheque
+LibraryHttpHandler -->"1\n studentRegistry" StudentRegistry
+
+}
+
 @enduml

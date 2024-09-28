@@ -9,7 +9,7 @@ Fonctionnalité: gérer les livres
     Quand le bibliothécaire  ajoute le livre "UML pour les nuls"
     Alors la bibliothèque contient le livre "UML pour les nuls" en un exemplaire
 
-  Scénario: Ajout d'un second exemplaire
+  Scénario: Ajout de deux exemplaires
     Quand le bibliothécaire  ajoute deux exemplaires du livre "Design Patterns for dummies"
     Alors la bibliothèque contient deux exemplaires du livre "Design Patterns for dummies"
 

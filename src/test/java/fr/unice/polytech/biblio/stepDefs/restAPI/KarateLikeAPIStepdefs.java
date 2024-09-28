@@ -1,4 +1,4 @@
-package fr.unice.polytech.biblio;
+package fr.unice.polytech.biblio.stepDefs.restAPI;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpServer;
@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class KarateLikeAPIStepdefs {
 
 
-//Copied from APIStepdefs.java
 // TODO: refactor this class to use the same setup as APIStepdefs.java
 
         static HttpServer scolarity;

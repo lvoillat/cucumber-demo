@@ -1,4 +1,4 @@
-package fr.unice.polytech.biblio;
+package fr.unice.polytech.biblio.stepDefs.restAPI;
 
 import com.sun.net.httpserver.HttpServer;
 import fr.unice.polytech.biblio.components.Bibliotheque;

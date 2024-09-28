@@ -1,4 +1,4 @@
-package fr.unice.polytech.biblio;
+package fr.unice.polytech.biblio.stepDefs.backend;
 
 import fr.unice.polytech.biblio.components.Bibliotheque;
 import fr.unice.polytech.biblio.components.BookNotFoundException;

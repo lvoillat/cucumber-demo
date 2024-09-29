@@ -11,8 +11,8 @@ Feature: Book rental
   Scenario: a book rental
     When "Marcel" rents the book "UML pour les nuls"
     Then There is 1 in his number of rentals
-      And The book "UML pour les nuls" is in a rental in the list of rentals
-      And The book "UML pour les nuls" is unavailable
+    And The book "UML pour les nuls" is in a rental in the list of rentals
+    And The book "UML pour les nuls" is unavailable
 
   Scenario: a book return
     Given "Marcel" has rent the book "UML pour les nuls"

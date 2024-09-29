@@ -19,11 +19,10 @@ class JaxsonUtilsTest {
         assertNotNull(json);
         assertTrue(json.contains("\"name\":\"John Doe\""));
         assertTrue(json.contains("\"studentNumber\":123456"));
-
     }
 
     @Test
-    void testFromJsonToStudent(){
+    void testFromJsonToStudent() {
         String json = "{\"name\":\"John Doe\",\"studentNumber\":123456}";
         Etudiant etudiant = JaxsonUtils.fromJson(json, Etudiant.class);
         assertNotNull(etudiant);
@@ -31,10 +30,9 @@ class JaxsonUtilsTest {
         assertEquals(123456, etudiant.getStudentNumber());
     }
 
-
     @Test
     void testABookToJson() throws JsonProcessingException {
-        Livre livre = new Livre("Design Patterns", new String[]{"Erich Gamma"}, "1994",0);
+        Livre livre = new Livre("Design Patterns", new String[] { "Erich Gamma" }, "1994", 0);
         String json = JaxsonUtils.toJson(livre);
         assertNotNull(json);
         assertTrue(json.contains("\"titre\":\"Design Patterns\""));
@@ -51,7 +49,7 @@ class JaxsonUtilsTest {
         assertEquals("1994", livre.getIsbn());
         assertEquals("DP-0", livre.getIdentifiant());
 
-        livre = new Livre("Your Code as a Crime Scene",new String[]{"Adam Tornhill"},"123");
+        livre = new Livre("Your Code as a Crime Scene", new String[] { "Adam Tornhill" }, "123");
         String newBook = JaxsonUtils.toJson(livre);
         livre = JaxsonUtils.fromJson(newBook, Livre.class);
         assertNotNull(livre);
@@ -66,11 +64,10 @@ class JaxsonUtilsTest {
     }
 
     @Test
-    void testFromJsonToStudentDTO(){
+    void testFromJsonToStudentDTO() {
         String json = "{\"studentNumber\":123456}";
         LibraryHttpHandler.StudentDTO studentDTO = JaxsonUtils.fromJson(json, LibraryHttpHandler.StudentDTO.class);
         assertNotNull(studentDTO);
         assertEquals(123456, studentDTO.studentNumber());
     }
-
 }

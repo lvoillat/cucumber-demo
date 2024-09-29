@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Emprunter un livre
 
   Contexte:
@@ -10,8 +10,8 @@ Fonctionnalité: Emprunter un livre
   Scénario: emprunt d'un livre
     Quand "Marcel" emprunte le livre "UML pour les nuls"
     Alors Il y a 1 dans son nombre d'emprunts
-      Et Il y a le livre "UML pour les nuls" dans un emprunt de la liste d'emprunts
-      Et Le livre "UML pour les nuls" est indisponible
+    Et Il y a le livre "UML pour les nuls" dans un emprunt de la liste d'emprunts
+    Et Le livre "UML pour les nuls" est indisponible
 
   Scénario: emprunt d'un exemplaire d'un livre
     Quand "Marcel" emprunte le livre "Design Patterns for dummies"
@@ -31,7 +31,8 @@ Fonctionnalité: Emprunter un livre
     Alors Il y a <nombredEmprunts> dans son nombre d'emprunts
     Et Il y a le livre <titreLivre> dans un emprunt de la liste d'emprunts
     Et Le livre <titreLivre> est indisponible
+
     Exemples:
-      | nomEtudiant | titreLivre          | nombredEmprunts |
-      | "Marcel"    | "UML pour les nuls" | 1               |
-      | "Walid"     | "Design Patterns for dummies" | 2     |
+      | nomEtudiant | titreLivre                    | nombredEmprunts |
+      | "Marcel"    | "UML pour les nuls"           |               1 |
+      | "Walid"     | "Design Patterns for dummies" |               2 |

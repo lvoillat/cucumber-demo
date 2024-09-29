@@ -1,6 +1,5 @@
-#language: fr
+# language: fr
 Fonctionnalité: gérer les livres
-
 
   Contexte:
     Etant donné une bibliothèque

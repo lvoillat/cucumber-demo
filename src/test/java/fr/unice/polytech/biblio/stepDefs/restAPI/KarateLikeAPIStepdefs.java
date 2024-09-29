@@ -25,23 +25,20 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 public class KarateLikeAPIStepdefs {
 
+    // TODO: refactor this class to use the same setup as APIStepdefs.java
 
-// TODO: refactor this class to use the same setup as APIStepdefs.java
+    static HttpServer scolarity;
+    static HttpServer library;
 
-        static HttpServer scolarity;
-        static HttpServer library;
+    static StudentRegistry studentRegistry = new StudentRegistry();
+    static Bibliotheque biblio = new Bibliotheque();
 
-        static StudentRegistry studentRegistry = new StudentRegistry();
-        static Bibliotheque biblio = new Bibliotheque();
-
-        static Logger logger = Logger.getLogger("KarateLikeAPITesting");
-        {
-            logger.setLevel(Level.OFF);
-        }
-
+    static Logger logger = Logger.getLogger("KarateLikeAPITesting");
+    {
+        logger.setLevel(Level.OFF);
+    }
 
     @AfterEach
     public void teardown() {
@@ -51,23 +48,25 @@ public class KarateLikeAPIStepdefs {
         SimpleHttpServer4Scolarity.stopServer(PORT4SCOLARITY);
     }
 
-/*-----------------------------------
-Background:
-  * libraryPort = 8004
-  * scolarityPort = 8005
-  * urlbase 'http://localhost'
-  * url4library = urlbase + ':' + libraryPort + '/api/library'
- --------------------------------------- */
+    /*-----------------------------------
+    Background:
+      * libraryPort = 8004
+      * scolarityPort = 8005
+      * urlbase 'http://localhost'
+      * url4library = urlbase + ':' + libraryPort + '/api/library'
+     --------------------------------------- */
 
-    private int PORT4LIBRARY ;
+    private int PORT4LIBRARY;
     private int PORT4SCOLARITY;
     private String urlbase;
     private String url4library;
+
     @Given("libraryPort = {int}")
     public void library_port(Integer port) {
         PORT4LIBRARY = port;
 
     }
+
     @Given("scolarityPort = {int}")
     public void scolarity_port(Integer port) {
         PORT4SCOLARITY = port;
@@ -89,15 +88,17 @@ Background:
 
     }
 
-  /*  Given url url4library
-      Given request { title: "Guernica", author: [ "Dave Boling"], isbn: "2-84893-019-5", identifiant: "G-0" }
-      When method post
-      Then status 200
-      And match response == { "Book created" }
-   */
+    /*
+     * Given url url4library
+     * Given request { title: "Guernica", author: [ "Dave Boling"], isbn:
+     * "2-84893-019-5", identifiant: "G-0" }
+     * When method post
+     * Then status 200
+     * And match response == { "Book created" }
+     */
 
     String url;
-    URI uri ;
+    URI uri;
     HttpClient client;
 
     @Given("url url4library")
@@ -107,19 +108,22 @@ Background:
         client = HttpClient.newHttpClient();
     }
 
-    HttpRequest.BodyPublisher body ;
+    HttpRequest.BodyPublisher body;
+
     @Given("request \\{ title: {string}, author: [ {string}], isbn: {string}, identifiant: {string} }")
-    public void request_author_isbn_identifiant(String title, String author, String isbn, String identifiant) throws JsonProcessingException {
+    public void request_author_isbn_identifiant(String title, String author, String isbn, String identifiant)
+            throws JsonProcessingException {
         Livre livre = Livre.createLivre(title, identifiant);
         livre.setIsbn(isbn);
-        livre.setAuteurs(new String[]{author});
+        livre.setAuteurs(new String[] { author });
         String newBook = JaxsonUtils.toJson(livre);
         System.out.println(newBook);
-        logger.log(Level.FINE, "Json before : " + newBook);
+        logger.log(Level.FINE, "Json before : {0}", newBook);
         body = HttpRequest.BodyPublishers.ofString(newBook);
     }
 
     HttpResponse<String> response;
+
     @When("method post")
     public void method_post() throws IOException, InterruptedException {
         response = client.send(
@@ -129,7 +133,6 @@ Background:
                         .build(),
                 HttpResponse.BodyHandlers.ofString());
     }
-
 
     @Then("status {int}")
     public void status(Integer int1) {
@@ -141,13 +144,13 @@ Background:
         assertEquals(contents, response.body());
     }
 
-
     /**
-     # get by id
-     Given url4library+ '/G-0'
-     When method get
-     Then status 200
-     And match response == {"titre":"Java","auteurs":["Gosling","Holmes"],"isbn":"2000","identifiant":"J-1"}
+     * # get by id
+     * Given url4library+ '/G-0'
+     * When method get
+     * Then status 200
+     * And match response ==
+     * {"titre":"Java","auteurs":["Gosling","Holmes"],"isbn":"2000","identifiant":"J-1"}
      */
 
     @Given("url4library+ {string}")
@@ -155,7 +158,6 @@ Background:
         url = url4library + complement;
         uri = URI.create(url);
     }
-
 
     @When("method get")
     public void method_get() {
@@ -171,18 +173,18 @@ Background:
         }
     }
 
-
     @Then("match response == \\{titre:{string},auteurs:[{string}],isbn: {string},identifiant:{string}}")
     public void match_response_auteurs_isbn_identifiant(String title, String author, String isbn, String identifiant) {
-        assertEquals("{\"titre\":\""+title+"\",\"auteurs\":[\""+author+"\"],\"isbn\":\""+isbn+"\",\"identifiant\":\""+identifiant+"\"}", response.body());
+        assertEquals("{\"titre\":\"" + title + "\",\"auteurs\":[\"" + author + "\"],\"isbn\":\"" + isbn
+                + "\",\"identifiant\":\"" + identifiant + "\"}", response.body());
     }
-
 
     @Then("match response contains \\{titre:{string},auteurs:[{string}],isbn: {string},identifiant:{string}}")
-    public void match_response_contains_auteurs_isbn_identifiant(String title, String author, String isbn, String identifiant) {
-        assertTrue(response.body().contains("{\"titre\":\""+title+"\",\"auteurs\":[\""+author+"\"],\"isbn\":\""+isbn+"\",\"identifiant\":\""+identifiant+"\"}"));
+    public void match_response_contains_auteurs_isbn_identifiant(String title, String author, String isbn,
+            String identifiant) {
+        assertTrue(response.body().contains("{\"titre\":\"" + title + "\",\"auteurs\":[\"" + author + "\"],\"isbn\":\""
+                + isbn + "\",\"identifiant\":\"" + identifiant + "\"}"));
 
     }
-
 
 }

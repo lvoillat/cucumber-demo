@@ -23,7 +23,6 @@ public class StudentRegistry implements StudentManager, StudentFinder<Etudiant> 
 
     Map<Integer, Etudiant> students = new HashMap<>();
 
-
     @Override
     public List<Etudiant> findAll() {
         return List.of(students.values().toArray(new Etudiant[0]));
@@ -36,7 +35,7 @@ public class StudentRegistry implements StudentManager, StudentFinder<Etudiant> 
 
     @Override
     public Optional<Etudiant> findByNumber(int studentNumber) {
-        return students.get(studentNumber) != null ? Optional.of(students.get(studentNumber)) : Optional.empty();
+        return Optional.ofNullable(students.get(studentNumber));
     }
 
     @Override
@@ -45,7 +44,6 @@ public class StudentRegistry implements StudentManager, StudentFinder<Etudiant> 
         student.setName(name);
         student.setStudentNumber(studentNumber);
         students.put(studentNumber, student);
-
     }
 
     @Override
@@ -65,9 +63,8 @@ public class StudentRegistry implements StudentManager, StudentFinder<Etudiant> 
         }
     }
 
-
     public StudentRegistry() {
-        //Mimic loading of members from a database
+        // Mimic loading of members from a database
         Etudiant etudiant1 = new Etudiant();
         etudiant1.setName("John Doe");
         etudiant1.setStudentNumber(123456);

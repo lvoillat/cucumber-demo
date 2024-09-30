@@ -16,3 +16,14 @@ Fonctionnalité: gérer les livres
   Scénario: Accès à un livre inexistant
     Quand le lecteur cherche le livre avec l'ID U-100
     Alors une exception est levée avec le message "Book not found"
+
+  Scénario: ajout de plusieurs livres
+    Etant donné que la bibliothèque contient le livre "UML pour les nuls" en 3 exemplaires
+    Quand le bibliothécaire ajoute les livres suivants:
+      | ISBN  | Titre                    |nb exemplaires|
+      | 2212092806 | UML pour les nuls        |2|
+      | 0471798541 | Design Patterns for dummies |4|
+    Alors la bibliothèque contient au moins les livres suivants:
+      | ISBN  | Titre                    | nb exemplaires|
+      | 2212092806 | UML pour les nuls        | 5|
+      | 0471798541 | Design Patterns for dummies |  4|

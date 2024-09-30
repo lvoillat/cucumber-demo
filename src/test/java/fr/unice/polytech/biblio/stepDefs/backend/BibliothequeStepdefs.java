@@ -11,6 +11,7 @@ import io.cucumber.java.fr.Etantdonnéque;
 import io.cucumber.java.fr.Quand;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -110,6 +111,47 @@ public class BibliothequeStepdefs {
     @Alors("une exception est levée avec le message {string}")
     public void une_exception_est_levée_avec_le_message(String message) {
         assertEquals(message, exception.getMessage());
+    }
+
+
+
+
+    @Etantdonnéque("la bibliothèque contient le livre {string} en {int} exemplaires")
+    public void la_bibliothèque_contient_le_livre_en_exemplaires(String titre, Integer nbreExemplaires) {
+        for (int i = 0; i < nbreExemplaires; i++) {
+            Livre livre = new Livre(titre);
+            bibliotheque.addLivre(livre);
+        }
+    }
+
+
+    @Quand("le bibliothécaire ajoute les livres suivants:")
+    public void le_bibliothécaire_ajoute_les_livres_suivants(List<Map<String,String>> books) {
+
+        for (Map<String, String> book : books) {
+            int numberOfBooks = 1;
+            if (book.get("exemplaires") != null) {
+                numberOfBooks = Integer.parseInt(book.get("exemplaires"));
+            }
+            //loop to add the number of exemplaires
+            for (int i = 0; i < numberOfBooks; i++) {
+                    Livre livre = new Livre(book.get("titre"));
+                    livre.setIsbn(book.get("isbn"));
+                    bibliotheque.addLivre(livre);
+                }
+            }
+
+    }
+
+
+
+    @Alors("la bibliothèque contient au moins les livres suivants:")
+    public void la_bibliothèque_contient_au_moins_les_livres_suivants(List<Map<String,String>> books) {
+      for (Map<String, String> book : books) {
+          List<Livre> livres = bibliotheque.getLivresByTitle(book.get("titre"));
+          int numberOfBooks = book.get("exemplaires") == null ? 1 : Integer.parseInt(book.get("exemplaires"));
+          assertTrue(livres.size() > numberOfBooks);
+      }
     }
 
 }
